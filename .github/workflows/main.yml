@@ -1,0 +1,44 @@
+name: Deploy to EC2 Nginx
+
+on:
+push:
+branches:
+- main
+
+jobs:
+deploy:
+runs-on: ubuntu-latest
+
+```
+steps:
+  - name: Checkout Code
+    uses: actions/checkout@v4
+
+  - name: Deploy Website
+    uses: appleboy/ssh-action@v1.0.3
+    with:
+      host: ${{ secrets.EC2_HOST }}
+      username: ubuntu
+      key: ${{ secrets.EC2_SSH_KEY }}
+      port: 22
+      script: |
+        # Install Nginx and Git
+        sudo apt update -y
+        sudo apt install -y nginx git
+
+        # Start Nginx
+        sudo systemctl enable nginx
+        sudo systemctl start nginx
+
+        # Deploy Website
+        if [ ! -d "/var/www/html/.git" ]; then
+          sudo rm -rf /var/www/html/*
+          sudo git clone https://github.com/${{ github.repository }} /var/www/html
+        else
+          cd /var/www/html
+          sudo git pull origin main
+        fi
+
+        # Reload Nginx
+        sudo systemctl reload nginx
+```
