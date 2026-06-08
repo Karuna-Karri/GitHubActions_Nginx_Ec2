@@ -1,18 +1,14 @@
  name: Deploy Website to EC2
-
-on:
+'on':
   push:
     branches:
       - main
-
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
-
       - name: Deploy to EC2
         uses: appleboy/ssh-action@v1.0.3
         with:
@@ -37,3 +33,5 @@ jobs:
             fi
 
             sudo systemctl reload nginx
+
+   
