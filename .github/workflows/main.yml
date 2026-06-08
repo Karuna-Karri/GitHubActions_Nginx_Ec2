@@ -1,5 +1,4 @@
 name: Deploy to EC2 Nginx
-
 on:
 push:
 branches:
@@ -9,7 +8,6 @@ jobs:
 deploy:
 runs-on: ubuntu-latest
 
-```
 steps:
   - name: Checkout Code
     uses: actions/checkout@v4
@@ -38,7 +36,3 @@ steps:
           cd /var/www/html
           sudo git pull origin main
         fi
-
-        # Reload Nginx
-        sudo systemctl reload nginx
-```
