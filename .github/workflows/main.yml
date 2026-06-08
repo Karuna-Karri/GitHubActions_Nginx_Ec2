@@ -9,7 +9,7 @@ jobs:
 deploy:
 runs-on: ubuntu-latest
 
-
+```
 steps:
   - name: Checkout Code
     uses: actions/checkout@v4
@@ -28,13 +28,14 @@ steps:
         sudo systemctl enable nginx
         sudo systemctl start nginx
 
-        if [ ! -d "/var/www/html/.git" ]; then
-          sudo rm -rf /var/www/html/*
-          sudo git clone https://github.com/${{ github.repository }} /var/www/html
+        cd /var/www/html
+
+        if [ -d ".git" ]; then
+          git pull origin main
         else
-          cd /var/www/html
-          sudo git pull origin main
+          sudo rm -rf /var/www/html/*
+          git clone https://github.com/${{ github.repository }} .
         fi
 
         sudo systemctl reload nginx
-
+```
