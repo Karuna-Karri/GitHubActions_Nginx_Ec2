@@ -1,4 +1,4 @@
-  jobs:
+  
     name: Auto Deploy to EC2 via Nginx!!!
 'on':
   push:
