@@ -8,7 +8,7 @@
     branches:
       - main
 env:
-  TARGET_URL: http://13.218.24.66
+  TARGET_URL: http://65.1.147.13
 jobs:
   deploy:
     runs-on: ubuntu-latest
